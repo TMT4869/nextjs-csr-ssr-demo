@@ -1,14 +1,11 @@
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'CSR Demo - Client Side Rendering | Next.js Demo',
-  description: 'Demo trang Client Side Rendering với Next.js. Xem cách dữ liệu được tải sau khi component mount.',
+  title: "CSR Demo - Client Side Rendering | Next.js Demo",
+  description:
+    "Demo Client Side Rendering with Next.js. See how data is loaded after component mount.",
 };
 
-export default function CSRLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function CSRLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

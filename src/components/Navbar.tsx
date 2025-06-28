@@ -1,6 +1,10 @@
+'use client';
+
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Navbar() {
+  const { t } = useLanguage();
   return (
     <nav className="border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 backdrop-blur-sm bg-white/90 dark:bg-gray-900/90">
       <div className="container mx-auto px-4">
@@ -21,19 +25,19 @@ export default function Navbar() {
               href="/blog"
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
             >
-              Trang chủ
+              {t('navbar.home')}
             </Link>
             <Link 
               href="/blog/categories"
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
             >
-              Danh mục
+              {t('navbar.categories')}
             </Link>
             <Link 
               href="/blog/about"
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
             >
-              Giới thiệu
+              {t('navbar.about')}
             </Link>
           </div>
 
@@ -43,7 +47,7 @@ export default function Navbar() {
               href="/"
               className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
             >
-              ← Về Demo
+              {t('navbar.backToDemo')}
             </Link>
             <div className="hidden sm:flex items-center space-x-2 text-xs">
               <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded">

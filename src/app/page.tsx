@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import PerformanceTable from "@/components/PerformanceTable";
+import LanguageToggle from "@/components/LanguageToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
 
 function ResponsiveNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -31,53 +34,57 @@ function ResponsiveNavbar() {
               href="/csr-demo"
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 font-medium transition-colors"
             >
-              🔄 CSR Demo
+              {t('nav.csrDemo')}
             </Link>
             <Link
               href="/ssr-demo"
               className="text-green-600 hover:text-green-800 dark:text-green-400 font-medium transition-colors"
             >
-              ⚡ SSR Demo
+              {t('nav.ssrDemo')}
             </Link>
             <Link
               href="/comparison"
               className="text-purple-600 hover:text-purple-800 dark:text-purple-400 font-medium transition-colors"
             >
-              📊 So sánh
+              {t('nav.comparison')}
             </Link>
             <Link
               href="/blog"
               className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 font-medium transition-colors"
             >
-              📝 Blog (Fast)
+              {t('nav.blogFast')}
             </Link>
             <Link
               href="/blog-slow"
               className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg font-medium transition-colors"
             >
-              🐌 Blog (Slow)
+              {t('nav.blogSlow')}
             </Link>
+            <LanguageToggle />
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={toggleMenu}
-            className="lg:hidden flex items-center justify-center w-10 h-10 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none"
-            aria-label="Toggle navigation menu"
-          >
-            <svg
-              className={`w-6 h-6 transition-transform duration-200 ${isMenuOpen ? 'rotate-90' : ''}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <div className="lg:hidden flex items-center space-x-3">
+            <LanguageToggle />
+            <button
+              onClick={toggleMenu}
+              className="flex items-center justify-center w-10 h-10 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none"
+              aria-label="Toggle navigation menu"
             >
-              {isMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+              <svg
+                className={`w-6 h-6 transition-transform duration-200 ${isMenuOpen ? 'rotate-90' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Mobile/Tablet Menu */}
@@ -92,35 +99,35 @@ function ResponsiveNavbar() {
               onClick={() => setIsMenuOpen(false)}
               className="flex items-center px-4 py-3 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-800 dark:hover:text-blue-400 rounded-lg transition-colors"
             >
-              🔄 <span className="ml-2">CSR Demo</span>
+              🔄 <span className="ml-2">{t('nav.csrDemo').replace('🔄 ', '')}</span>
             </Link>
             <Link 
               href="/ssr-demo"
               onClick={() => setIsMenuOpen(false)}
               className="flex items-center px-4 py-3 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-800 dark:hover:text-green-400 rounded-lg transition-colors"
             >
-              ⚡ <span className="ml-2">SSR Demo</span>
+              ⚡ <span className="ml-2">{t('nav.ssrDemo').replace('⚡ ', '')}</span>
             </Link>
             <Link 
               href="/blog"
               onClick={() => setIsMenuOpen(false)}
               className="flex items-center px-4 py-3 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-800 dark:hover:text-indigo-400 rounded-lg transition-colors"
             >
-              📝 <span className="ml-2">Blog (Optimized)</span>
+              📝 <span className="ml-2">{t('nav.blogOptimized').replace('📝 ', '')}</span>
             </Link>
             <Link 
               href="/blog-slow"
               onClick={() => setIsMenuOpen(false)}
               className="flex items-center px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-800 dark:hover:text-red-400 rounded-lg transition-colors"
             >
-              🐌 <span className="ml-2">Blog (Slow SSR)</span>
+              🐌 <span className="ml-2">{t('nav.blogSlowSSR').replace('🐌 ', '')}</span>
             </Link>
             <Link 
               href="/comparison"
               onClick={() => setIsMenuOpen(false)}
               className="block mx-4 mt-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-medium transition-colors text-center"
             >
-              📊 So sánh chi tiết
+              {t('nav.detailedComparison')}
             </Link>
           </div>
         </div>
@@ -130,6 +137,8 @@ function ResponsiveNavbar() {
 }
 
 export default function Home() {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <ResponsiveNavbar />
@@ -140,26 +149,25 @@ export default function Home() {
           {" "}
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
             {" "}
-            CSR vs SSR{" "}
+            {t('hero.title')}{" "}
           </h1>{" "}
           <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-4xl mx-auto">
             {" "}
-            Khám phá sự khác biệt giữa Client-Side Rendering và Server-Side
-            Rendering trong Next.js thông qua các demo thực tế{" "}
+            {t('hero.description')}{" "}
           </p>{" "}
           <div className="flex flex-wrap justify-center gap-4">
             {" "}
             <span className="px-4 py-2 bg-white/20 rounded-full text-lg">
               {" "}
-              🚀 Next.js 14+{" "}
+              {t('hero.nextjs')}{" "}
             </span>{" "}
             <span className="px-4 py-2 bg-white/20 rounded-full text-lg">
               {" "}
-              ⚡ Performance Demo{" "}
+              {t('hero.performance')}{" "}
             </span>{" "}
             <span className="px-4 py-2 bg-white/20 rounded-full text-lg">
               {" "}
-              🔧 Optimization Techniques{" "}
+              {t('hero.optimization')}{" "}
             </span>{" "}
           </div>{" "}
         </div>{" "}
@@ -171,7 +179,7 @@ export default function Home() {
           {" "}
           <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
             {" "}
-            So sánh nhanh CSR vs SSR{" "}
+            {t('comparison.title')}{" "}
           </h2>{" "}
           <PerformanceTable />{" "}
         </div>{" "}
@@ -183,7 +191,7 @@ export default function Home() {
           {" "}
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-12">
             {" "}
-            Trải nghiệm các Demo{" "}
+            {t('demo.title')}{" "}
           </h2>{" "}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {" "}
@@ -196,11 +204,11 @@ export default function Home() {
               <div className="text-4xl mb-4">⚡</div>{" "}
               <h3 className="text-xl font-semibold text-blue-900 dark:text-blue-100 mb-2">
                 {" "}
-                CSR Demo{" "}
+                {t('demo.csr.title')}{" "}
               </h3>{" "}
               <p className="text-blue-700 dark:text-blue-300 text-sm">
                 {" "}
-                Client-Side Rendering với loading states và 3s delay{" "}
+                {t('demo.csr.description')}{" "}
               </p>{" "}
             </Link>{" "}
             {/* SSR Demo */}{" "}
@@ -212,11 +220,11 @@ export default function Home() {
               <div className="text-4xl mb-4">🚀</div>{" "}
               <h3 className="text-xl font-semibold text-green-900 dark:text-green-100 mb-2">
                 {" "}
-                SSR Demo{" "}
+                {t('demo.ssr.title')}{" "}
               </h3>{" "}
               <p className="text-green-700 dark:text-green-300 text-sm">
                 {" "}
-                Server-Side Rendering với 2s delay để demo performance{" "}
+                {t('demo.ssr.description')}{" "}
               </p>{" "}
             </Link>{" "}
             {/* Comparison */}{" "}
@@ -228,11 +236,11 @@ export default function Home() {
               <div className="text-4xl mb-4">📊</div>{" "}
               <h3 className="text-xl font-semibold text-purple-900 dark:text-purple-100 mb-2">
                 {" "}
-                So sánh chi tiết{" "}
+                {t('demo.comparison.title')}{" "}
               </h3>{" "}
               <p className="text-purple-700 dark:text-purple-300 text-sm">
                 {" "}
-                Phân tích chi tiết performance và use cases{" "}
+                {t('demo.comparison.description')}{" "}
               </p>{" "}
             </Link>{" "}
             {/* Blog Optimized */}{" "}
@@ -244,11 +252,11 @@ export default function Home() {
               <div className="text-4xl mb-4">✨</div>{" "}
               <h3 className="text-xl font-semibold text-indigo-900 dark:text-indigo-100 mb-2">
                 {" "}
-                Blog (Optimized){" "}
+                {t('demo.blogOptimized.title')}{" "}
               </h3>{" "}
               <p className="text-indigo-700 dark:text-indigo-300 text-sm">
                 {" "}
-                Streaming & Suspense để tối ưu UX{" "}
+                {t('demo.blogOptimized.description')}{" "}
               </p>{" "}
             </Link>{" "}
             {/* Blog Slow */}{" "}
@@ -260,11 +268,11 @@ export default function Home() {
               <div className="text-4xl mb-4">😴</div>{" "}
               <h3 className="text-xl font-semibold text-red-900 dark:text-red-100 mb-2">
                 {" "}
-                Blog (Slow SSR){" "}
+                {t('demo.blogSlow.title')}{" "}
               </h3>{" "}
               <p className="text-red-700 dark:text-red-300 text-sm">
                 {" "}
-                Blocking SSR với 5s delay để so sánh{" "}
+                {t('demo.blogSlow.description')}{" "}
               </p>{" "}
             </Link>{" "}
           </div>{" "}
@@ -277,8 +285,7 @@ export default function Home() {
           {" "}
           <p className="text-gray-400">
             {" "}
-            © 2025 Next.js CSR vs SSR Demo. Built with Next.js 14+ and
-            TypeScript.{" "}
+            {t('footer.copyright')}{" "}
           </p>{" "}
         </div>{" "}
       </footer>{" "}

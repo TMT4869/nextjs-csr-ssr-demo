@@ -1,4 +1,10 @@
+'use client';
+
+import { useLanguage } from '@/contexts/LanguageContext';
+
 export default function BlogSlowLoading() {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Navbar Skeleton */}
@@ -38,11 +44,10 @@ export default function BlogSlowLoading() {
             <div className="animate-spin rounded-full h-8 w-8 sm:h-10 sm:w-10 border-b-2 border-red-600"></div>
           </div>
           <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4 px-2">
-            Đang tải Blog (Slow SSR)...
+            {t('loading.blogSlow')}
           </h2>
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 max-w-sm sm:max-w-md mx-auto px-3">
-            Server đang fetch dữ liệu với 5s delay. Đây là demo blocking SSR - 
-            toàn bộ trang phải chờ server xử lý xong.
+            {t('loading.serverFetching')}
           </p>
           
           {/* Progress Bar */}
@@ -51,21 +56,21 @@ export default function BlogSlowLoading() {
               <div className="bg-red-600 h-2 sm:h-3 rounded-full animate-pulse" style={{width: '75%'}}></div>
             </div>
             <div className="flex justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-              <span>SSR Processing...</span>
-              <span>~5 seconds</span>
+              <span>{t('loading.ssrProcessing')}</span>
+              <span>{t('loading.estimatedTime')}</span>
             </div>
           </div>
 
           {/* Loading Info */}
           <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700 max-w-xs sm:max-w-lg mx-auto">
             <h3 className="font-semibold text-red-900 dark:text-red-100 mb-2 text-sm sm:text-base">
-              🐌 Blocking SSR Demo
+              {t('loading.blockingDemo')}
             </h3>
             <ul className="text-xs sm:text-sm text-red-700 dark:text-red-300 space-y-1 text-left">
-              <li>• Server phải fetch tất cả dữ liệu trước</li>
-              <li>• User không thể tương tác trong lúc chờ</li>
-              <li>• Toàn bộ HTML render một lần</li>
-              <li>• SEO tốt nhưng UX kém</li>
+              <li>{t('loading.serverMustFetch')}</li>
+              <li>{t('loading.noInteraction')}</li>
+              <li>{t('loading.singleRender')}</li>
+              <li>{t('loading.seoGood')}</li>
             </ul>
           </div>
         </div>

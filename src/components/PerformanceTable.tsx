@@ -1,10 +1,14 @@
+'use client';
+
 import { performanceMetrics } from '@/types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface PerformanceTableProps {
   className?: string;
 }
 
 export default function PerformanceTable({ className = '' }: PerformanceTableProps) {
+  const { t } = useLanguage();
   const getStatusColor = (status: 'good' | 'warning' | 'poor') => {
     switch (status) {
       case 'good':
@@ -22,10 +26,10 @@ export default function PerformanceTable({ className = '' }: PerformanceTablePro
     <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden ${className}`}>
       <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-          📊 So sánh Performance Chi tiết
+          {t('perf.title')}
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          Đánh giá các metrics quan trọng giữa CSR và SSR
+          {t('perf.subtitle')}
         </p>
       </div>
       
@@ -34,13 +38,13 @@ export default function PerformanceTable({ className = '' }: PerformanceTablePro
           <thead className="bg-gray-100 dark:bg-gray-700">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                Metrics
+                {t('perf.metrics')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                CSR (Client Side)
+                {t('perf.csr')}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                SSR (Server Side)
+                {t('perf.ssr')}
               </th>
             </tr>
           </thead>
@@ -83,15 +87,15 @@ export default function PerformanceTable({ className = '' }: PerformanceTablePro
         <div className="flex items-center space-x-6 text-xs">
           <div className="flex items-center space-x-1">
             <span className="inline-block w-3 h-3 bg-green-500 rounded-full"></span>
-            <span className="text-gray-600 dark:text-gray-400">Tốt</span>
+            <span className="text-gray-600 dark:text-gray-400">{t('perf.good')}</span>
           </div>
           <div className="flex items-center space-x-1">
             <span className="inline-block w-3 h-3 bg-yellow-500 rounded-full"></span>
-            <span className="text-gray-600 dark:text-gray-400">Trung bình</span>
+            <span className="text-gray-600 dark:text-gray-400">{t('perf.average')}</span>
           </div>
           <div className="flex items-center space-x-1">
             <span className="inline-block w-3 h-3 bg-red-500 rounded-full"></span>
-            <span className="text-gray-600 dark:text-gray-400">Kém</span>
+            <span className="text-gray-600 dark:text-gray-400">{t('perf.poor')}</span>
           </div>
         </div>
       </div>

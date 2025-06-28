@@ -1,11 +1,17 @@
+'use client';
+
+import { useLanguage } from '@/contexts/LanguageContext';
+
 export default function BlogListSkeleton() {
+  const { t } = useLanguage();
+  
   return (
     <div className="space-y-3 sm:space-y-4 lg:space-y-6">
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-2.5 sm:p-3 lg:p-4">
         <div className="flex items-center space-x-2">
           <div className="animate-spin rounded-full h-3 w-3 sm:h-4 sm:w-4 border-b-2 border-blue-600 flex-shrink-0"></div>
           <span className="text-blue-700 dark:text-blue-300 text-xs sm:text-sm lg:text-base">
-            SSR: Đang tải dữ liệu blog từ server (5s)...
+            {t('blogList.loadingFromServer')}
           </span>
         </div>
       </div>

@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { categories } from '@/lib/blog-utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function CategoryFilter() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useLanguage();
 
   // Sync with URL search params
   useEffect(() => {
@@ -49,7 +51,7 @@ export default function CategoryFilter() {
         <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
         </svg>
-        <span className="mr-1 sm:mr-2">Danh mục</span>
+        <span className="mr-1 sm:mr-2">{t('filter.title')}</span>
         <span className="text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">
           CSR
         </span>
@@ -66,7 +68,7 @@ export default function CategoryFilter() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="font-medium truncate mr-2">Tất cả</span>
+            <span className="font-medium truncate mr-2">{t('filter.all')}</span>
             <span className={`text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 rounded flex-shrink-0 ${
               selectedCategory === 'all' ? 'bg-white/20 text-white' : 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
             }`}>
@@ -103,7 +105,7 @@ export default function CategoryFilter() {
       {selectedCategory !== 'all' && (
         <div className="mt-3 sm:mt-4 p-2.5 sm:p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
           <p className="text-xs sm:text-sm text-blue-700 dark:text-blue-300">
-            Đang lọc theo: <span className="font-medium break-words">
+            {t('filter.filtering')} <span className="font-medium break-words">
               {categories.find(cat => cat.id === selectedCategory)?.name}
             </span>
           </p>
