@@ -19,7 +19,7 @@ interface BlogListProps {
 export default function BlogList({ initialBlogs }: BlogListProps) {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   // Get current search and filter parameters
   const searchQuery = searchParams.get("search") || "";
@@ -110,10 +110,10 @@ export default function BlogList({ initialBlogs }: BlogListProps) {
         {/* Rendering Info */}
         <div className="hidden md:flex items-center space-x-2 text-xs">
           <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded">
-            SSR: Initial Data
+            {t('render.ssrInitialData')}
           </span>
           <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">
-            CSR: Filter & Search
+            {t('render.csrFilterSearch')}
           </span>
         </div>
       </div>
@@ -197,7 +197,7 @@ export default function BlogList({ initialBlogs }: BlogListProps) {
                       )}
                     </span>
                   </div>
-                  <span>{formatDate(blog.createdAt)}</span>
+                  <span>{formatDate(blog.createdAt, language)}</span>
                 </div>
               </div>
             </article>

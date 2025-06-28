@@ -1,6 +1,6 @@
 'use client';
 
-import { performanceMetrics } from '@/types';
+import { createPerformanceMetrics } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface PerformanceTableProps {
@@ -9,6 +9,7 @@ interface PerformanceTableProps {
 
 export default function PerformanceTable({ className = '' }: PerformanceTableProps) {
   const { t } = useLanguage();
+  const performanceMetrics = createPerformanceMetrics(t);
   const getStatusColor = (status: 'good' | 'warning' | 'poor') => {
     switch (status) {
       case 'good':

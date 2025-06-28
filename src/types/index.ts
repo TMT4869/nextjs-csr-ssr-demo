@@ -12,6 +12,76 @@ export interface PerformanceMetrics {
   };
 }
 
+// Function to create performance metrics with translation support
+export const createPerformanceMetrics = (t: (key: string) => string): PerformanceMetrics[] => [
+  {
+    label: t('perf.firstContentfulPaint'),
+    csr: {
+      value: t('perf.slow'),
+      status: 'poor',
+      description: t('perf.csr.fcp.desc')
+    },
+    ssr: {
+      value: t('perf.fast'),
+      status: 'good',
+      description: t('perf.ssr.fcp.desc')
+    }
+  },
+  {
+    label: t('perf.timeToInteractive'),
+    csr: {
+      value: t('perf.fast'),
+      status: 'good',
+      description: t('perf.csr.tti.desc')
+    },
+    ssr: {
+      value: t('perf.medium'),
+      status: 'warning',
+      description: t('perf.ssr.tti.desc')
+    }
+  },
+  {
+    label: t('perf.seoScore'),
+    csr: {
+      value: t('perf.poor'),
+      status: 'poor',
+      description: t('perf.csr.seo.desc')
+    },
+    ssr: {
+      value: t('perf.excellent'),
+      status: 'good',
+      description: t('perf.ssr.seo.desc')
+    }
+  },
+  {
+    label: t('perf.serverLoad'),
+    csr: {
+      value: t('perf.low'),
+      status: 'good',
+      description: t('perf.csr.server.desc')
+    },
+    ssr: {
+      value: t('perf.high'),
+      status: 'poor',
+      description: t('perf.ssr.server.desc')
+    }
+  },
+  {
+    label: t('perf.initialBundleSize'),
+    csr: {
+      value: t('perf.large'),
+      status: 'poor',
+      description: t('perf.csr.bundle.desc')
+    },
+    ssr: {
+      value: t('perf.small'),
+      status: 'good',
+      description: t('perf.ssr.bundle.desc')
+    }
+  }
+];
+
+// Legacy export for backwards compatibility (will use default Vietnamese)
 export const performanceMetrics: PerformanceMetrics[] = [
   {
     label: 'First Contentful Paint',

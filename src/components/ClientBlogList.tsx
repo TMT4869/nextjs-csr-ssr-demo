@@ -15,7 +15,7 @@ export default function ClientBlogList() {
     const fetchBlogs = async () => {
       console.log('🔄 CSR: Starting blog data fetch on client...');
       const startTime = Date.now();
-      const data = await generateMockBlogs(12, language);
+      const data = await generateMockBlogs(12, language, t);
       const endTime = Date.now();
       console.log(`✅ CSR: Blog data fetched in ${endTime - startTime}ms`);
       setBlogs(data);
@@ -23,7 +23,7 @@ export default function ClientBlogList() {
     };
 
     fetchBlogs();
-  }, [language]);
+  }, [language, t]);
 
   if (loading) {
     return (

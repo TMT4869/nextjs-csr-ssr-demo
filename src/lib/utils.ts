@@ -45,7 +45,8 @@ export const fetchPostsSSR = async (t?: (key: string) => string): Promise<Post[]
 };
 
 // Format date utility
-export const formatDate = (dateString: string, locale: string = "vi-VN"): string => {
+export const formatDate = (dateString: string, language: 'vi' | 'en' = "en"): string => {
+  const locale = language === 'vi' ? 'vi-VN' : 'en-US';
   return new Date(dateString).toLocaleDateString(locale, {
     year: "numeric",
     month: "long",

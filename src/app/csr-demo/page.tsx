@@ -11,7 +11,7 @@ export default function CSRDemo() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loadTime, setLoadTime] = useState<number>(0);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     const startTime = Date.now();
@@ -173,7 +173,7 @@ export default function CSRDemo() {
                       {t("csr.author")}
                       {post.author}
                     </span>
-                    <span>{formatDate(post.createdAt)}</span>
+                    <span>{formatDate(post.createdAt, language)}</span>
                   </div>
                 </div>
               ))}

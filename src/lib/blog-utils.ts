@@ -36,9 +36,32 @@ const authors = [
   'Võ Minh Khang'
 ];
 
-// Mock blog titles - bilingual
-const blogTitles = {
-  vi: [
+// Mock blog titles - using translation keys
+const getBlogTitles = (t: (key: string) => string): string[] => [
+  t('blog.title1'),
+  t('blog.title2'),
+  t('blog.title3'),
+  t('blog.title4'),
+  t('blog.title5'),
+  t('blog.title6'),
+  t('blog.title7'),
+  t('blog.title8'),
+  t('blog.title9'),
+  t('blog.title10'),
+  t('blog.title11'),
+  t('blog.title12'),
+  t('blog.title13'),
+  t('blog.title14'),
+  t('blog.title15'),
+];
+
+// Generate mock blog posts
+export const generateMockBlogs = async (count: number = 12, language: 'vi' | 'en' = 'vi', t?: (key: string) => string): Promise<BlogPost[]> => {
+  // Simulate API delay for SSR (5 seconds to demonstrate SSR vs CSR difference)
+  await new Promise(resolve => setTimeout(resolve, 5000));
+  
+  // If no translation function provided, use default static titles for backwards compatibility
+  const titles = t ? getBlogTitles(t) : (language === 'vi' ? [
     'Hướng dẫn React Hooks chi tiết cho người mới bắt đầu',
     'So sánh CSR vs SSR trong Next.js 14',
     'TypeScript Tips và Tricks hữu ích',
@@ -54,8 +77,7 @@ const blogTitles = {
     'Testing trong React với Jest',
     'Responsive Design với Tailwind CSS',
     'Microservices Architecture patterns'
-  ],
-  en: [
+  ] : [
     'Complete React Hooks Guide for Beginners',
     'CSR vs SSR Comparison in Next.js 14',
     'Useful TypeScript Tips and Tricks',
@@ -71,27 +93,28 @@ const blogTitles = {
     'Testing in React with Jest',
     'Responsive Design with Tailwind CSS',
     'Microservices Architecture Patterns'
-  ]
-};
-
-// Generate mock blog posts
-export const generateMockBlogs = async (count: number = 12, language: 'vi' | 'en' = 'vi'): Promise<BlogPost[]> => {
-  // Simulate API delay for SSR (5 seconds to demonstrate SSR vs CSR difference)
-  await new Promise(resolve => setTimeout(resolve, 5000));
-  
-  const titles = blogTitles[language];
+  ]);
   
   return Array.from({ length: count }, (_, i) => {
     const category = categories[Math.floor(Math.random() * categories.length)];
     const title = titles[Math.floor(Math.random() * titles.length)];
     
-    const content = language === 'vi' ? 
-      `Đây là nội dung chi tiết của bài viết "${title}". Bài viết này thuộc danh mục ${category.name} và cung cấp những kiến thức hữu ích cho developers. Lorem ipsum dolor sit amet, consectetur adipiscing elit...` :
-      `This is the detailed content of the article "${title}". This article belongs to the ${category.name} category and provides useful knowledge for developers. Lorem ipsum dolor sit amet, consectetur adipiscing elit...`;
+    const content = t ? 
+      t('blog.contentTemplate').replace('{title}', title).replace('{category}', category.name) :
+      (language === 'vi' ? 
+        `Đây là nội dung chi tiết của bài viết "${title}". Bài viết này thuộc danh mục ${category.name} và cung cấp những kiến thức hữu ích cho developers. Lorem ipsum dolor sit amet, consectetur adipiscing elit...` :
+        `This is the detailed content of the article "${title}". This article belongs to the ${category.name} category and provides useful knowledge for developers. Lorem ipsum dolor sit amet, consectetur adipiscing elit...`);
     
-    const excerpt = language === 'vi' ?
-      `Tìm hiểu về ${category.name} và những kiến thức cần thiết cho developers hiện đại.` :
-      `Learn about ${category.name} and essential knowledge for modern developers.`;
+    const excerpt = t ?
+      t('blog.excerptTemplate').replace('{category}', category.name) :
+      (language === 'vi' ?
+        `Tìm hiểu về ${category.name} và những kiến thức cần thiết cho developers hiện đại.` :
+        `Learn about ${category.name} and essential knowledge for modern developers.`);
+    
+    const tutorialTag = t ? t('blog.tags.tutorial') : 'Tutorial';
+    const tipsTag = t ? t('blog.tags.tips') : 'Tips';
+    const beginnerTag = t ? t('blog.tags.beginner') : 'Beginner';
+    const advancedTag = t ? t('blog.tags.advanced') : 'Advanced';
     
     return {
       id: i + 1,
@@ -102,8 +125,8 @@ export const generateMockBlogs = async (count: number = 12, language: 'vi' | 'en
       category: category.id,
       tags: [
         category.name,
-        Math.random() > 0.5 ? (language === 'vi' ? 'Tutorial' : 'Tutorial') : (language === 'vi' ? 'Tips' : 'Tips'),
-        Math.random() > 0.5 ? (language === 'vi' ? 'Beginner' : 'Beginner') : (language === 'vi' ? 'Advanced' : 'Advanced')
+        Math.random() > 0.5 ? tutorialTag : tipsTag,
+        Math.random() > 0.5 ? beginnerTag : advancedTag
       ],
       readTime: Math.floor(Math.random() * 10) + 3,
       imageUrl: `https://picsum.photos/400/250?random=${i + 1}`,
