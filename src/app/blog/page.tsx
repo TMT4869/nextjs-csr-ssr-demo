@@ -14,8 +14,13 @@ export const metadata: Metadata = {
     "Blog about technology, programming, and web development. Combining SSR and CSR for optimal performance.",
 };
 
-export default function BlogHomePage() {
-  console.log("🔄 Page: Loading blog page instantly...");
+export default async function BlogHomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string; category?: string }>;
+}) {
+  const params = await searchParams;
+  console.log("🔄 Page: Loading blog page instantly...", params);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -34,7 +39,7 @@ export default function BlogHomePage() {
 
               {/* Stats - Server Component with Suspense */}
               <Suspense fallback={<BlogStatsSkeleton />}>
-                <BlogStats />
+                <BlogStats searchParams={searchParams} />
               </Suspense>
             </div>
           </aside>
@@ -43,7 +48,7 @@ export default function BlogHomePage() {
           <main className="lg:col-span-3">
             {/* Blog List - SSR with Suspense */}
             <Suspense fallback={<BlogListSkeleton />}>
-              <BlogListSSR />
+              <BlogListSSR searchParams={searchParams} />
             </Suspense>
           </main>
         </div>
